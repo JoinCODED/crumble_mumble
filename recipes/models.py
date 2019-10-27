@@ -11,6 +11,7 @@ class Category(models.Model):
 	def __str__(self):
 		return self.name
 
+	
 class Recipe(models.Model):
 	category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
 	name = models.CharField(max_length=150)
@@ -43,7 +44,6 @@ class Ingredient(models.Model):
 	measure = models.CharField(max_length=20, choices=MEASURES)
 	recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="ingredients")
 	ingredient = models.CharField(max_length=120)
-
 
 
 class Instruction(models.Model):
