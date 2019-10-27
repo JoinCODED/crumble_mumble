@@ -3,7 +3,6 @@ from .models import Recipe, Category
 
 
 def recipes_list(request):
-
 	recipes = Recipe.objects.filter(private=False)
 	categories = Category.objects.all()
 
@@ -25,3 +24,4 @@ def recipe_details(request, recipe_slug):
 
 def my_recipes_list(request):
 	return render(request, 'my_recipes_list.html')
+
