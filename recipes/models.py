@@ -52,7 +52,7 @@ class Instruction(models.Model):
 
 
 def create_slug(instance, new_slug=None):
-    slug = slugify (instance.name)
+    slug = slugify(instance.name)
     if new_slug is not None:
         slug = new_slug
     qs = Recipe.objects.filter(slug=slug)
