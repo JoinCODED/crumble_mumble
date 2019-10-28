@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '=!*x@lr^it!c#3c1nx9!fl02fn_$$q3ir^dn&)48-o_ey1c&bw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['157.245.200.46', 'crumblemumble.codeunicorn.io', '127.0.0.1']
 
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'crispy_forms',
+    'graphene_django',
 
     'recipes',
     'authentication',
@@ -145,3 +146,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+GRAPHENE = {
+    'SCHEMA': 'crumble_mumble.schema.schema'
+}

@@ -8,15 +8,17 @@
 	<div class="col-11 m-auto">
 		<button class="btn btn-outline-green active mb-3 mr-3 col-lg-2 col-xs-6" id="btn-all">All</button>
 		{% for category in categories %}
-			<button class="btn btn-outline-green mb-3 mr-3 col-lg-2 col-xs-6" id="btn-{{category.name}}">{{category.name}}</button>
+			<button class="btn btn-outline-green mb-3 mr-3 col-lg-2 col-xs-6" id="btn-{{category.name}}" onclick="filter('{{category.name}}')">{{category.name}}</button>
 		{% endfor %}
 	</div>
 	<div class="col-11 m-auto p-3">
-			<div class="row">
+			<div class="row" id="recipes-list">
 				{% for recipe in recipes %}
-					<div class="col-sm-3" id="{{recipe.category.name}}">
+					<div class="col-sm-3">
+						
 					    <a href="{% url 'recipe-details' recipe.slug %}" class="text-decoration-none">
 						    <div class="card">
+						    	<span hidden>{{recipe.category.name}}</span>
 						    	<img src="{{recipe.image.url}}" class="card-img-top image-crop image-sm">
 						      	<div class="card-body">
 						        	<h6 class="card-title text-dark">{{recipe.name}}</h6>
@@ -35,24 +37,20 @@
 	<script type="text/javascript">
 		$("#btn-all").click(function() {
 			$("#btn-all").addClass("active");
-			{% for category in categories %}
-				$( "#"+'{{category.name}}' ).show( "fast" );
-				$( "#btn-"+'{{category.name}}' ).removeClass("active");
-			{% endfor %}
+			$("#recipes-list div").show()
 		});
-		{% for category in categories %}
-			$( "#btn-"+'{{category.name}}').click(function() {
-				$( "#"+'{{category.name}}' ).show( "fast" );
-				$("#btn-"+'{{category.name}}').addClass("active");
-				$("#btn-all").removeClass("active");
-				var category = '{{category.name}}';
-				{% for category in categories %}
-					if ('{{category.name}}' !== category){
-						$( "#"+'{{category.name}}' ).hide( "fast" );
-						$( "#btn-"+'{{category.name}}' ).removeClass("active");
-					}
-				{% endfor %}
-			});
-		{% endfor %}
+		function filter(category){
+			$("#btn-"+category).addClass("active");
+			$("#recipes-list div").show().filter(function() {
+				  var recipeCategory = $(this).find("span").text();
+				  if (category !== recipeCategory)
+				  	return true;
+				}).hide();
+			$("#btn-all").removeClass("active");
+			{% for category in categories %}
+				if ("{{category.name}}" !== category)
+					$( "#btn-"+'{{category.name}}' ).removeClass("active");
+			{% endfor %}
+		}
 	</script>
 {% endblock script %}
